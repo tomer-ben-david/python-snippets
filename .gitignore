@@ -25,5 +25,9 @@ project/plugins/project/
 .svn/
 .metadata/
 
+#python
+__pycache__/*
+*.pyc
+
 # nodejs
 node_modules/
