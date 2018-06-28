@@ -6,6 +6,8 @@ Created on Fri Feb  2 10:37:20 2018
 @author: tomer.bendavid
 """
 
+# logfile
+
 ##############################
 ####### Parse Log File #######
 ##############################

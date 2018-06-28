@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jun 27 16:55:49 2018
+
+@author: tomer.bendavid
+"""
+
+# 1. Cleanup
+# 2. Word Freq (title + description)
+# 3. Print first words based on weight.
+# ***4*** enhance with the below stemmer
+
+## Use this to enhance albgorithms pass all words through it!!! ##
+import nltk
+from nltk.stem.porter import *
+stemmer = PorterStemmer()
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+def stem(words): return map(lambda w: stemmer.stem(w), words)
+
+text = "this is some very long text"
+
+# Removing stop words and making frequency table
+
+stopWords = set(stopwords.words("english"))
+words = word_tokenize(text)
+
+words = stem(words)
+
+# Word freq table
+
+freqTable = dict()
+for word in words:
+    word = word.lower()
+    if word in stopWords:
+        continue
+    if word in freqTable:
+        freqTable[word] += 1
+    else:
+        freqTable[word] = 1
+
+# Score to sentences
+        
+sentences = sent_tokenize(text)
+sentenceValue = dict()        
+
+for sentence in sentences:
+    for wordValue in freqTable:
+        if wordValue[0] in sentence.lower():
+            if sentence[:12] in sentenceValue:
+                sentenceValue[sentence[:12]] += wordValue[1]
+            else:
+                sentenceValue[sentence[:12]] = wordValue[1] # sentence[:12] hash into dictionary
+                
+# Compare scores
+                
+sumValues = 0
+for sentence in sentenceValue:
+    sumValues += sentenceValue[sentence]
+
+# Average value of a sentence from original text
+average = int(sumValues/ len(sentenceValue))                
+
+# Threshold and build summary
+
+summary = ''
+for sentence in sentences:
+        if sentence[:12] in sentenceValue and sentenceValue[sentence[:12]] > (1.5 * average):
+            summary +=  " " + sentence
+            
+print('summary: ' + summary)            
