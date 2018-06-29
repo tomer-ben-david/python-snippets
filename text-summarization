@@ -23,24 +23,48 @@ stemmer = PorterStemmer()
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
+import string
+
+
+def remove_punctuations(s: str) -> str:
+    table = str.maketrans({key: None for key in string.punctuation})
+    return s.translate(table)
 
 
 def stem(words): return map(lambda w: stemmer.stem(w), words)
 
 
-text: str = """AmazonBasics AA Performance Alkaline Batteries (48 Count) - Packaging May Vary About the product
-Pack of 48 1.5V AA Alkaline Batteries
-Improved anti-corrosion components and new zinc composition resulting in 10-years anti-leakage shelf life
-Designed to provide reliable and lasting performance for both high and low drain devices
-Unique Japanese technology that enables better performance after storage, over-discharge, and high temperatures
-Works with a variety of devices including digital cameras, game controllers, toys, and clocks; do not attempt to recharge"""
+def word_index(fullText: str, w: Tuple[str, int]) -> int:
+    return fullText.lower().index(w[0])
+
+
+def top_scores_sorted_by_text(someText: str, w_scores: FreqDist, k: int):
+    return sorted(w_scores.most_common(k), key=lambda w: word_index(someText, w))
+
+
+# Some text from wikipedia.
+text: str = """
+Leonardo da Vinci
+Leonardo di ser Piero da Vinci (Italian: [leoˈnardo di ˌsɛr ˈpjɛːro da (v)ˈvintʃi] (About this sound listen); 15 April 1452 – 2 May 1519), more commonly Leonardo da Vinci or simply Leonardo, was an Italian polymath of the Renaissance, whose areas of interest included invention, painting, sculpting, architecture, science, music, mathematics, engineering, literature, anatomy, geology, astronomy, botany, writing, history, and cartography. He has been variously called the father of palaeontology, ichnology, and architecture, and is widely considered one of the greatest painters of all time. Sometimes credited with the inventions of the parachute, helicopter and tank,[1][2][3] he epitomised the Renaissance humanist ideal.
+
+Many historians and scholars regard Leonardo as the prime exemplar of the "Universal Genius" or "Renaissance Man", an individual of "unquenchable curiosity" and "feverishly inventive imagination",[4] and he is widely considered one of the most diversely talented individuals ever to have lived.[5] According to art historian Helen Gardner, the scope and depth of his interests were without precedent in recorded history, and "his mind and personality seem to us superhuman, while the man himself mysterious and remote".[4] Marco Rosci notes that while there is much speculation regarding his life and personality, his view of the world was logical rather than mysterious, and that the empirical methods he employed were unorthodox for his time.[6]
+
+Born out of wedlock to a notary, Piero da Vinci, and a peasant woman, Caterina, in Vinci in the region of Florence, Leonardo was educated in the studio of the renowned Florentine painter Andrea del Verrocchio. Much of his earlier working life was spent in the service of Ludovico il Moro in Milan. He later worked in Rome, Bologna and Venice, and he spent his last years in France at the home awarded to him by Francis I of France.
+
+Leonardo was, and is, renowned primarily as a painter. Among his works, the Mona Lisa is the most famous and most parodied portrait[7] and The Last Supper the most reproduced religious painting of all time.[4] Leonardo's drawing of the Vitruvian Man is also regarded as a cultural icon,[8] being reproduced on items as varied as the euro coin, textbooks, and T-shirts.
+
+A painting by Leonardo, Salvator Mundi, sold for a world record $450.3 million at a Christie's auction in New York, 15 November 2017, the highest price ever paid for a work of art.[9] Perhaps fifteen of his paintings have survived.[nb 1] Nevertheless, these few works, together with his notebooks, which contain drawings, scientific diagrams, and his thoughts on the nature of painting, compose a contribution to later generations of artists rivalled only by that of his contemporary, Michelangelo.
+
+Leonardo is revered for his technological ingenuity. He conceptualised flying machines, a type of armoured fighting vehicle, concentrated solar power, an adding machine,[10] and the double hull. Relatively few of his designs were constructed or even feasible during his lifetime, as the modern scientific approaches to metallurgy and engineering were only in their infancy during the Renaissance. Some of his smaller inventions, however, such as an automated bobbin winder and a machine for testing the tensile strength of wire, entered the world of manufacturing unheralded. A number of Leonardo's most practical inventions are nowadays displayed as working models at the Museum of Vinci. He made substantial discoveries in anatomy, civil engineering, geology, optics, and hydrodynamics, but he did not publish his findings and they had no direct influence on later science.[11]"""
 
 # Removing stop words and making frequency table
 
-stop_words: Set[str] = set(stopwords.words("english"))
+text = remove_punctuations(text)
+text = text.lower()
 words = word_tokenize(text)
+stop_words: Set[str] = set(stopwords.words("english"))
 words = [w for w in words if not w in stop_words]
-
+text = ' '.join(words)
 
 # words = stem(words)
 
@@ -51,16 +75,7 @@ for word in words:
 
 # Score to sentences
 
-def word_index(fullText: str, w: Tuple[str, int]) -> int:
-    return fullText.lower().index(w[0])
-
-
-def top_scores_sorted_by_text(w_scores: FreqDist):
-    return sorted(w_scores.most_common(7), key=lambda w: word_index(text, w))
-
-
-summary = top_scores_sorted_by_text(words_score)
-
+summary = top_scores_sorted_by_text(text, words_score, 7)
 print(summary)
 
 #maybe filter nounds now.
