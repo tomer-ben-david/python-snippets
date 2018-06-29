@@ -12,6 +12,11 @@ Created on Wed Jun 27 16:55:49 2018
 # ***4*** enhance with the below stemmer
 
 ## Use this to enhance albgorithms pass all words through it!!! ##
+from typing import Dict, Set, Any, Tuple
+
+from nltk import FreqDist
+from nltk.probability import FreqDist
+
 import nltk
 from nltk.stem.porter import *
 stemmer = PorterStemmer()
@@ -19,56 +24,43 @@ stemmer = PorterStemmer()
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 
+
 def stem(words): return map(lambda w: stemmer.stem(w), words)
 
-text = "this is some very long text"
+
+text: str = """AmazonBasics AA Performance Alkaline Batteries (48 Count) - Packaging May Vary About the product
+Pack of 48 1.5V AA Alkaline Batteries
+Improved anti-corrosion components and new zinc composition resulting in 10-years anti-leakage shelf life
+Designed to provide reliable and lasting performance for both high and low drain devices
+Unique Japanese technology that enables better performance after storage, over-discharge, and high temperatures
+Works with a variety of devices including digital cameras, game controllers, toys, and clocks; do not attempt to recharge"""
 
 # Removing stop words and making frequency table
 
-stopWords = set(stopwords.words("english"))
+stop_words: Set[str] = set(stopwords.words("english"))
 words = word_tokenize(text)
+words = [w for w in words if not w in stop_words]
 
-words = stem(words)
+
+# words = stem(words)
 
 # Word freq table
-
-freqTable = dict()
+words_score: FreqDist = FreqDist()
 for word in words:
-    word = word.lower()
-    if word in stopWords:
-        continue
-    if word in freqTable:
-        freqTable[word] += 1
-    else:
-        freqTable[word] = 1
+    words_score[word.lower()] += 1
 
 # Score to sentences
-        
-sentences = sent_tokenize(text)
-sentenceValue = dict()        
 
-for sentence in sentences:
-    for wordValue in freqTable:
-        if wordValue[0] in sentence.lower():
-            if sentence[:12] in sentenceValue:
-                sentenceValue[sentence[:12]] += wordValue[1]
-            else:
-                sentenceValue[sentence[:12]] = wordValue[1] # sentence[:12] hash into dictionary
-                
-# Compare scores
-                
-sumValues = 0
-for sentence in sentenceValue:
-    sumValues += sentenceValue[sentence]
+def word_index(fullText: str, w: Tuple[str, int]) -> int:
+    return fullText.lower().index(w[0])
 
-# Average value of a sentence from original text
-average = int(sumValues/ len(sentenceValue))                
 
-# Threshold and build summary
+def top_scores_sorted_by_text(w_scores: FreqDist):
+    return sorted(w_scores.most_common(7), key=lambda w: word_index(text, w))
 
-summary = ''
-for sentence in sentences:
-        if sentence[:12] in sentenceValue and sentenceValue[sentence[:12]] > (1.5 * average):
-            summary +=  " " + sentence
-            
-print('summary: ' + summary)            
+
+summary = top_scores_sorted_by_text(words_score)
+
+print(summary)
+
+#maybe filter nounds now.
