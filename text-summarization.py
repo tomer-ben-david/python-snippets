@@ -116,24 +116,9 @@ X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
 from sklearn.naive_bayes import MultinomialNB # Naive bayes classifier
 clf = MultinomialNB().fit(X_train_tfidf, twenty_train.target)
 
-## Predict!
+## Predict document class!
 
-docs_new = ["""
-Abortion
-Synonyms	Induced miscarriage, termination of pregnancy
-Specialty	Obstetrics and gynecology
-ICD-10-PCS	O04
-ICD-9-CM	779.6
-MeSH	D000028
-MedlinePlus	007382
-[edit on Wikidata]
-Abortion is the ending of pregnancy by removing an embryo or fetus before it can survive outside the uterus.[note 1] An abortion that occurs spontaneously is also known as a miscarriage. An abortion may be caused purposely and is then called an induced abortion, or less frequently, "induced miscarriage". The word abortion is often used to mean only induced abortions. A similar procedure after the fetus could potentially survive outside the womb is known as a "late termination of pregnancy".[1]
-
-When allowed by law, abortion in the developed world is one of the safest procedures in medicine.[2][3] Modern methods use medication or surgery for abortions.[4] The drug mifepristone in combination with prostaglandin appears to be as safe and effective as surgery during the first and second trimester of pregnancy.[4][5] Birth control, such as the pill or intrauterine devices, can be used immediately following abortion.[5] When performed legally and safely, induced abortions do not increase the risk of long-term mental or physical problems.[6] In contrast, unsafe abortions (those performed by unskilled individuals, with hazardous equipment, or in unsanitary facilities) cause 47,000 deaths and 5 million hospital admissions each year.[6][7] The World Health Organization recommends safe and legal abortions be available to all women.[8]
-
-Around 56 million abortions are performed each year in the world,[9] with about 45% done unsafely.[10] Abortion rates changed little between 2003 and 2008,[11] before which they decreased for at least two decades as access to family planning and birth control increased.[12] As of 2008, 40% of the world's women had access to legal abortions without limits as to reason.[13] Countries that permit abortions have different limits on how late in pregnancy abortion is allowed.[13]
-
-Historically, abortions have been attempted using herbal medicines, sharp tools, forceful massage, or through other traditional methods.[14] Abortion laws and cultural or religious views of abortions are different around the world. In some areas abortion is legal only in specific cases such as rape, problems with the fetus, poverty, risk to a woman's health, or incest.[15] In many places there is much debate over the moral, ethical, and legal issues of abortion.[16][17] Those who oppose abortion often maintain that an embryo or fetus is a human with a right to life, and so they may compare abortion to murder.[18][19] Those who favor the legality of abortion often hold that a woman has a right to make decisions about her own body.[20] Others favor legal and accessible abortion as a public health measure.[21]"""]
+docs_new = ["""Abortion is the ending of pregnancy by removing an embryo or fetus before it can survive outside the uterus.[note 1] An abortion that occurs spontaneously is also known as a miscarriage. An abortion may be caused purposely and is then called an induced abortion, or less frequently, "induced miscarriage". The word abortion is often used to mean only induced abortions. A similar procedure after the fetus could potentially survive outside the womb is known as a "late termination of pregnancy"""]
 X_new_counts = count_vect.transform(docs_new) # Extract new doc features.
 X_new_tfidf = tfidf_transformer.transform(X_new_counts)
 
