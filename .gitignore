@@ -1,6 +1,8 @@
 *.class
 *.log
 
+venv/*
+
 # sbt specific
 dist/*
 target/
