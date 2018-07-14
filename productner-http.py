@@ -13,6 +13,7 @@ Send a POST request::
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
 import subprocess
+from urlparse import parse_qs
 
 class S(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -22,8 +23,25 @@ class S(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()
-        result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
-        self.wfile.write("<html><body><h1>" + result + "</h1></body></html>")
+        params = self.path[2:]
+        if 'title' in params:
+            print("params: " + params)
+            print("url params: " + str(parse_qs(params)))
+            title = str(parse_qs(params)['title'][0])
+            description = str(parse_qs(params)['description'][0])
+
+            productner_homedir = '/home/itamar/tmp'
+            # productner_homedir = '/home/ubuntu/productner'
+            productner_inputfilepath = productner_homedir + "/Product Dataset.csv"
+
+            text_file = open(productner_inputfilepath, "w")
+            text_file.write('id,name,description\n')
+            text_file.write('000' + ',' + title + ',' + description)
+            text_file.close()
+
+            create_input_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
+            predict_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
+            self.wfile.write("<html><body><h1>" + predict_result + "</h1></body></html>")
 
     def do_HEAD(self):
         self._set_headers()
