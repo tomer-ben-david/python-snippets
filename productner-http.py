@@ -14,6 +14,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
 import subprocess
 from urlparse import parse_qs
+import json
 
 # http://ec2-54-242-165-191.compute-1.amazonaws.com:8080/?title=skhfskjfs%20skfdhskjf%20akjfdh%20askfhakjs%20hfakjshfkjas%20f&description=asklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfka%20sfkjsaf%20akhf%20akshfdkashfkjsahfdkjashfdieyiuy888888888%20%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676
 
@@ -43,7 +44,7 @@ class S(BaseHTTPRequestHandler):
 
             create_input_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
             predict_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
-            self.wfile.write("<html><body><h1>" + predict_result + "</h1></body></html>")
+            self.wfile.write(json.dumps(predict_result))
 
     def do_HEAD(self):
         self._set_headers()
