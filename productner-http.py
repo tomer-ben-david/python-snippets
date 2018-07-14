@@ -57,6 +57,10 @@ class S(BaseHTTPRequestHandler):
 def run(server_class=HTTPServer, handler_class=S, port=8080):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
+
+    # SSL
+    httpd.socket = ssl.wrap_socket (httpd.socket, certfile='/home/ubuntu/keys/mypemfile.pem', server_side=True)
+
     print 'Starting httpd...'
     httpd.serve_forever()
 
