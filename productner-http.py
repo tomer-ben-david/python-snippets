@@ -30,8 +30,8 @@ class S(BaseHTTPRequestHandler):
             title = str(parse_qs(params)['title'][0])
             description = str(parse_qs(params)['description'][0])
 
-            productner_homedir = '/home/itamar/tmp'
-            # productner_homedir = '/home/ubuntu/productner'
+            # productner_homedir = '/home/itamar/tmp'
+            productner_homedir = '/home/ubuntu/productner'
             productner_inputfilepath = productner_homedir + "/Product Dataset.csv"
 
             text_file = open(productner_inputfilepath, "w")
