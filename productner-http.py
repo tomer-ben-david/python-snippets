@@ -46,10 +46,10 @@ class ProductNERMain:
         text_file.close()
 
         raw_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
-        return(raw_result.replace("\"", "").replace("\\\'", "\"").replace("'", '"'))
+        return(raw_result.replace("\"", "").replace("\\\'", "\"").replace("'", '"').replace('u"', "\""))
 
 if __name__ == "__main__":
-    # print('{\'category\': \'office products\', \'description\': \'Ask HN: Which non programming / CS books are a "must" read for programmers?\', \'brand\': \'Ask HN:\', \'id\': \'000\', \'name\': \'Ask HN: Which non programming / CS books are a "must" read for programmers?\'}\n'
+    # print('{"category": u"office products", "description": "Ask HN: Which non programming / CS books are a must read for programmers?", "brand": "Ask HN:", "id": "000", "name": "Ask HN: Which non programming / CS books are a must read for programmers?"}'.replace('u"', "\""))
     #       .replace("\"", "").replace("\\\'", "\"").replace("'", '"'))
     # print(json.loads(r"""{"category": "office products", "description": "Ask HN: Which non programming / CS books are a \"must\" read for programmers?", "brand": "Ask HN:", "id": "000", "name": "Ask HN: Which non programming / CS books are a \"must\" read for programmers?"}"""
 
