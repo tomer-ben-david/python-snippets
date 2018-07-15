@@ -46,7 +46,7 @@ class ProductNERMain:
 
         create_input_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
         predict_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
-        return(json.dumps(predict_result))
+        return(predict_result)
 
         return {'message GET OK! title: ' + title}
 
