@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # autossh -f -M 0 -nNT -R 80:localhost:8080 serveo.net
 
@@ -12,8 +12,8 @@ createTunnel() {
 }
 
 ## Run the 'ls' command remotely.  If it returns non-zero, then create a new connection
-result=$(ps -ef | grep autossh | grep -v autossh | wc -l)
-if [[ $result -e 0 ]]; then
+result=$(ps -ef | grep autossh | grep -v grep | wc -l)
+if [[ $result -eq 0 ]]; then
     echo Creating new tunnel connection
     createTunnel
 fi
