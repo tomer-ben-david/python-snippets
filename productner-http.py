@@ -47,8 +47,7 @@ class ProductNERMain:
 
         raw_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
         print('raw_result: ' + raw_result)
-        predict_result = json.loads(raw_result)
-        return(json.dumps({ "category": predict_result['category'], "brand": predict_result['brand']}))
+        return(json.dumps(raw_result))
 
 if __name__ == "__main__":
     # print(json.dumps({'category': u'office products', 'description': 'Ask HN: Which non programming / CS books are a "must" read for programmers?', 'brand': 'Ask HN:', 'id': '000', 'name': 'Ask HN: Which non programming / CS books are a "must" read for programmers?'}))
