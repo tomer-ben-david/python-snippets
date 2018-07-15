@@ -47,7 +47,7 @@ class ProductNERMain:
 
         text_file = open(productner_inputfilepath, "w")
         text_file.write('id,name,description\n')
-        text_file.write('000' + ',' + title + ',' + description)
+        text_file.write('000' + ',' + title.replace(",", "") + ',' + description.replace(",",""))
         text_file.close()
 
         raw_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
