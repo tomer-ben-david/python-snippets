@@ -45,8 +45,8 @@ class ProductNERMain:
         text_file.write('000' + ',' + title + ',' + description)
         text_file.close()
 
-        predict_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
-        return(json.dump({ "category": predict_result['category'], "brand": predict_result["brand"]}))
+        predict_result = json.load(subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True))
+        return(json.dump({ "category": predict_result['category'], "brand": predict_result['brand']}))
 
 if __name__ == "__main__":
     app.run()
