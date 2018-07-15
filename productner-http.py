@@ -19,9 +19,10 @@ import subprocess
 import web
 import json
 # http://ec2-54-242-165-191.compute-1.amazonaws.com:8080/?title=skhfskjfs%20skfdhskjf%20akjfdh%20askfhakjs%20hfakjshfkjas%20f&description=asklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfka%20sfkjsaf%20akhf%20akshfdkashfkjsahfdkjashfdieyiuy888888888%20%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676
-
+#
+# pkill -9 python;conda activate tensorflow_p27;cd ~/python-snippets/;git pull;forever start -c python productner-http.py
 # https://www.amazon.com/Koehler-15145-7-75-White-Warmer/dp/B00AZBU5AO/ref=bbp_bb_01a411_st_8174_w_1?psc=1&smid=A1DAJWY369CQ80
-# ubuntu@ip-172-31-26-255:~/dev/ngrok$ nohup autossh -M 0 -R 80:localhost:8080 serveo.net & > nohup.out
+# ubuntu@ip-172-31-26-255:~/dev/ngrok$ autossh -f -M 0 -nNT -R 80:localhost:8080 serveo.net
 
 
 urls = ("/.*", "ProductNERMain")
