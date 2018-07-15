@@ -17,6 +17,7 @@ import json
 import SimpleHTTPServer
 import subprocess
 import web
+import json
 # http://ec2-54-242-165-191.compute-1.amazonaws.com:8080/?title=skhfskjfs%20skfdhskjf%20akjfdh%20askfhakjs%20hfakjshfkjas%20f&description=asklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfkaasklhf%20aksjfd%20kajskjasfkjashfka%20sfkjsaf%20akhf%20akshfdkashfkjsahfdkjashfdieyiuy888888888%20%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676akshfdkashfkjsahfdkjashfdieyiuy888888888%2067676
 
 urls = ("/.*", "ProductNERMain")
@@ -44,11 +45,8 @@ class ProductNERMain:
         text_file.write('000' + ',' + title + ',' + description)
         text_file.close()
 
-        create_input_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
         predict_result = subprocess.check_output(["python extract.py ./models/ Product\ Dataset.csv"], cwd="/home/ubuntu/productner", shell=True)
-        return(predict_result)
-
-        return {'message GET OK! title: ' + title}
+        return(json.dump({ "category": predict_result['category'], "brand": predict_result["brand"]}))
 
 if __name__ == "__main__":
     app.run()
